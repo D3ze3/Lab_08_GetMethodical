@@ -40,7 +40,6 @@ public class SafeInput {
             }
         }
     }
-
     public static int getRangedInt(Scanner pipe, String prompt, int low, int high) {
         int value;
         while (true) {
@@ -59,6 +58,7 @@ public class SafeInput {
             }
         }
     }
+
 
     public static double getRangedDouble(Scanner pipe, String prompt, double low, double high) {
         double value;
@@ -102,4 +102,41 @@ public class SafeInput {
             }
         }
     }
+
+    public static void prettyHeader(String msg) {
+        final int WIDTH = 60; // Total width of the header
+        final int PADDING = 3; // Fixed padding of asterisks on both sides
+
+        // Print top border
+        for (int i = 0; i < WIDTH; i++) {
+            System.out.print("*");
+        }
+        System.out.println();
+
+        // Calculate space for centering the message
+        int messageLength = msg.length();
+        int totalPadding = WIDTH - (messageLength + (PADDING * 2));
+        int leftPadding = totalPadding / 2;
+        int rightPadding = totalPadding - leftPadding;
+
+        // Print centered message
+        System.out.print("***");
+        for (int i = 0; i < leftPadding; i++) {
+            System.out.print(" ");
+        }
+        System.out.print(msg);
+        for (int i = 0; i < rightPadding; i++) {
+            System.out.print(" ");
+        }
+        System.out.println("***");
+
+        // Print bottom border
+        for (int i = 0; i < WIDTH; i++) {
+            System.out.print("*");
+        }
+        System.out.println();
+    }
 }
+
+
+

@@ -33,5 +33,3 @@ public class DevTest {
         System.out.println("Valid email entered: " + email);
     }
 }
-
-
