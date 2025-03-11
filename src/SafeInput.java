@@ -2,65 +2,104 @@ import java.util.Scanner;
 
 public class SafeInput {
 
-    /**
-     * Ensures user enters a non-zero length string.
-     * @param pipe Scanner object
-     * @param prompt Message to display
-     * @return A valid non-empty string
-     */
-    public static String getNonZeroLenString(Scanner pipe, String prompt) {
-        String retString = ""; // Set to zero length, loop runs until valid input
+    public static String  getNonZeroLenString(Scanner pipe, String prompt) {
+        String input;
         do {
-            System.out.print("\n" + prompt + ": "); // Show prompt
-            retString = pipe.nextLine();
-        } while (retString.length() == 0);
-        return retString;
+            System.out.print(prompt + ": ");
+            input = pipe.nextLine().trim();
+        } while (input.isEmpty());
+        return input;
     }
 
-    /**
-     * Ensures user enters a valid integer.
-     * @param pipe Scanner object
-     * @param prompt Message to display
-     * @return A valid integer
-     */
     public static int getInt(Scanner pipe, String prompt) {
-        int number = 0;
-        boolean isValid = false;
-        do {
-            System.out.print("\n" + prompt + ": ");
+        int value;
+        while (true) {
+            System.out.print(prompt + ": ");
             if (pipe.hasNextInt()) {
-                number = pipe.nextInt();
-                isValid = true;
+                value = pipe.nextInt();
+                pipe.nextLine(); // Clear buffer
+                return value;
             } else {
-                System.out.println("Invalid input. Please enter a valid integer.");
-                pipe.next(); // Read and discard the invalid input
+                System.out.println("Invalid input. Please enter an integer.");
+                pipe.next(); // Discard invalid input
             }
-            pipe.nextLine(); // Clear the buffer
-        } while (!isValid);
-        return number;
+        }
     }
 
-    /**
-     * Ensures user enters a valid double.
-     * @param pipe Scanner object
-     * @param prompt Message to display
-     * @return A valid double
-     */
     public static double getDouble(Scanner pipe, String prompt) {
-        double number = 0.0;
-        boolean isValid = false;
-        do {
-            System.out.print("\n" + prompt + ": ");
+        double value;
+        while (true) {
+            System.out.print(prompt + ": ");
             if (pipe.hasNextDouble()) {
-                number = pipe.nextDouble();
-                isValid = true;
+                value = pipe.nextDouble();
+                pipe.nextLine(); // Clear buffer
+                return value;
             } else {
-                System.out.println("Invalid input. Please enter a valid decimal number.");
-                pipe.next(); // Read and discard the invalid input
+                System.out.println("Invalid input. Please enter a decimal number.");
+                pipe.next(); // Discard invalid input
             }
-            pipe.nextLine(); // Clear the buffer
-        } while (!isValid);
-        return number;
+        }
+    }
+
+    public static int getRangedInt(Scanner pipe, String prompt, int low, int high) {
+        int value;
+        while (true) {
+            System.out.print(prompt + " [" + low + " - " + high + "]: ");
+            if (pipe.hasNextInt()) {
+                value = pipe.nextInt();
+                pipe.nextLine(); // Clear buffer
+                if (value >= low && value <= high) {
+                    return value;
+                } else {
+                    System.out.println("Error: Value out of range.");
+                }
+            } else {
+                System.out.println("Invalid input. Please enter an integer.");
+                pipe.next(); // Discard invalid input
+            }
+        }
+    }
+
+    public static double getRangedDouble(Scanner pipe, String prompt, double low, double high) {
+        double value;
+        while (true) {
+            System.out.print(prompt + " [" + low + " - " + high + "]: ");
+            if (pipe.hasNextDouble()) {
+                value = pipe.nextDouble();
+                pipe.nextLine(); // Clear buffer
+                if (value >= low && value <= high) {
+                    return value;
+                } else {
+                    System.out.println("Error: Value out of range.");
+                }
+            } else {
+                System.out.println("Invalid input. Please enter a decimal number.");
+                pipe.next(); // Discard invalid input
+            }
+        }
+    }
+
+    public static boolean getYNConfirm(Scanner pipe, String prompt) {
+        String input;
+        while (true) {
+            System.out.print(prompt + " [Y/N]: ");
+            input = pipe.nextLine().trim().toLowerCase();
+            if (input.equals("y")) return true;
+            if (input.equals("n")) return false;
+            System.out.println("Invalid input. Please enter 'Y' or 'N'.");
+        }
+    }
+
+    public static String getRegExString(Scanner pipe, String prompt, String regEx) {
+        String input;
+        while (true) {
+            System.out.print(prompt + ": ");
+            input = pipe.nextLine().trim();
+            if (input.matches(regEx)) {
+                return input;
+            } else {
+                System.out.println("Invalid input. Please follow the required format.");
+            }
+        }
     }
 }
-
